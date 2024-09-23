@@ -77,14 +77,14 @@ const SignIn = () => {
     }
 
     const account =  ()=>{
-        navigate("/sign-in")
+        navigate("/sign-up")
     }
 
     return (
         <> 
         <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-xl">
             <p ref={errRef} className={errMsg ? "errmsg" : "hidden"} aria-live="assertive">{errMsg}</p>
-            <h1 className="text-black font-bold m-[30px] p-[10px]">SIGN-UP</h1>
+            <h1 className="text-black font-bold m-[30px] p-[10px]">SIGN-IN</h1>
             <form onSubmit={handleSubmit} action="POST" className="min-w-6 min-h-19 flex flex-col justify-center items-center text-gray-600 bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
                
                 <label className="font-bold m-[30px] mb-[0px]" htmlFor="username">Username:
