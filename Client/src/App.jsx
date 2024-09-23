@@ -28,7 +28,7 @@ function App() {
      <Route path="/pricing" element={<Report />} />
      <Route path="/projects" element={<Tracker />} />
      <Route path="/" element={<SignIn />} />
-     <Route path="/sign-in" element={<Login />} />
+     <Route path="/login" element={<Login />} />
      <Route path="/api/names" element={<History />} />
            {/* redirects unmatched path to home
            <Route path="*" element={<Navigate to="/" />} />  */}

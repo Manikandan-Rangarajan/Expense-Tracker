@@ -77,7 +77,7 @@ const SignIn = () => {
     }
 
     const account =  ()=>{
-        navigate("/sign-up")
+        navigate("/login")
     }
 
     return (
