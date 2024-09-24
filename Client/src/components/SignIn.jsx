@@ -16,6 +16,9 @@ const SignIn = () => {
     const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
 
+    const [email, setEmail] = useState('');
+    const [emailFocus, setEmailFocus] = useState(false);
+
     const [className, setClassName] = useState('');
     const [validClassName, setValidClassName] = useState(false);
     const [classFocus, setClassFocus] = useState(false);
@@ -113,6 +116,7 @@ const SignIn = () => {
                     Must begin with a letter.<br />
                     Letters, numbers, underscores, hyphens allowed.
                 </p>
+
 
                 <label className="font-bold m-[30px] mb-[0px]" htmlFor="password">Password:
                     <span className={validPwd ? "valid" : "hidden"}><FontAwesomeIcon icon={faCheck}/></span>

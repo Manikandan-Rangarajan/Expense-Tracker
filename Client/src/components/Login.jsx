@@ -18,6 +18,10 @@ const Login = () => {
     const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
 
+    const [email, setEmail] = useState('');
+    const [emailFocus, setEmailFocus] = useState(false);
+
+
     const [classSec, setClassSec] = useState('');
     const [validclassSec, setValidClassSec] = useState(false);
     const [classFocus, setClassFocus] = useState(false);
@@ -60,15 +64,29 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:5000/sign-in', { user, pwd, classSec });
+            const response = await axios.post('http://localhost:5000/signup', {
+                name: user,
+                email,
+                password: pwd // Updated field name
+            });
+            
             
             if (response.status === 201) {
               alert('User created successfully.Now pls login in the sign-in page');
               navigate('/')
             }
           } catch (error) {
-              alert('error occured change the username and try');
-              console.error(error);
+            if (error.response) {
+                // The request was made, and the server responded with a status code outside 2xx range
+                setErrMsg(error.response.data.message || 'An error occurred');
+            } else if (error.request) {
+                // The request was made but no response was received
+                setErrMsg('No response from server');
+            } else {
+                // Something else caused the error
+                setErrMsg('Request error');
+            }
+            console.error(error);
           }
     }
 
@@ -106,18 +124,27 @@ const Login = () => {
                     Letters, numbers, underscores, hyphens allowed.
                 </p>
 
-                <label className="font-bold m-[30px] mb-[0px]" htmlFor="confirm_pwd">Class & Section:</label>
+                <label className="font-bold m-[30px] mb-[0px]" htmlFor="username">Email:</label>
                 <input
-                    type="text"
-                    id="classSec"
-                    onChange={(e) => setClassSec(e.target.value)}
+                    type="email"
+                    id="email"
+                    ref={userRef}
+                    autoComplete="on"
+                    onChange={(e) => setEmail(e.target.value)}
                     required
-                    aria-invalid={validMatch ? "false" : "true"}
-                    onFocus={() => setClassFocus(true)}
-                    onBlur={() => setClassFocus(false)}
-                    placeholder="Class section"
+                    aria-invalid={validName ? "false" : "true"}
+                    aria-describedby="uidnote"
+                    onFocus={() => setEmailFocus(true)}
+                    onBlur={() => setEmailFocus(false)}
+                    placeholder="abc@email.com"
                     className="border border-gray-600 rounded"
                 />
+                <p id="uidnote" className={emailFocus && user && !validName ? "instructions" : "hidden" }>
+                <FontAwesomeIcon icon={faInfoCircle}/>
+                    4 to 24 characters.<br />
+                    Must begin with a letter.<br />
+                    Letters, numbers, underscores, hyphens allowed.
+                </p>
 
                 <label className="font-bold m-[30px] mb-[0px]" htmlFor="password">Password:
                     <span className={validPwd ? "valid" : "hidden"}><FontAwesomeIcon icon={faCheck}/></span>
