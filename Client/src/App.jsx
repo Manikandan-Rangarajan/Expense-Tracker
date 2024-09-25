@@ -19,7 +19,7 @@ function App() {
   return (
     <Router>
       
-    {/* <Expense/> */}
+    {/* <Dashboard/> */}
  <div className='min-h-screen flex flex-col items-center justify-center bg-gray-100 text-xl overflow-y-hidden'>
   <Routes>
   
@@ -31,6 +31,7 @@ function App() {
      <Route path="/" element={<SignIn />} />
      <Route path="/login" element={<Login />} />
      <Route path="/api/names" element={<History />} />
+     <Route path="/expense" element={<Expense />} />
            {/* redirects unmatched path to home
            <Route path="*" element={<Navigate to="/" />} />  */}
    </Routes>
