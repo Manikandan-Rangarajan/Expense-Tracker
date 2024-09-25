@@ -61,11 +61,11 @@ const SignIn = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:5000/signup', { user, pwd });
+            const response = await axios.post('http://localhost:5000/signin', { name:user, password:pwd });
             
             if (response.status === 201) {
               alert('Alert user does not exists.Click ok to Sign-In');
-              navigate('/sign-in')
+              navigate('/login')
             }
           } catch (error) {
             if (error.response && error.response.status === 409) {

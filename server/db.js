@@ -6,18 +6,18 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     email:{
-        type:String,
-        required: true,
-        unique: true
+        type:String
+        // required: true,
+        // unique: true
     },
     password:{
         type: String,
         required: true,
     },
-    realpassword:{
-        type: String,
-        required: true,
-    }
+    // realpassword:{
+    //     type: String,
+    //     required: true,
+    // }
 })
 
 const Client = mongoose.model('Client',UserSchema);
