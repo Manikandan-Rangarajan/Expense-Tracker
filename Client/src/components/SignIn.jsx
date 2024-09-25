@@ -16,8 +16,8 @@ const SignIn = () => {
     const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
 
-    const [email, setEmail] = useState('');
-    const [emailFocus, setEmailFocus] = useState(false);
+    // const [email, setEmail] = useState('');
+    // const [emailFocus, setEmailFocus] = useState(false);
 
     const [className, setClassName] = useState('');
     const [validClassName, setValidClassName] = useState(false);
