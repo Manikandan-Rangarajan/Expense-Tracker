@@ -18,7 +18,22 @@ const UserSchema = new mongoose.Schema({
     //     type: String,
     //     required: true,
     // }
+     // Embedding Expenses Array
+  expenses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Expense', // Reference to Expense model
+    }]
 })
 
+const expenseSchema = new mongoose.Schema({
+    name: String,
+    amount: Number,
+    date: String,
+    category: String,
+  });
+
 const Client = mongoose.model('Client',UserSchema);
-export default Client;
+const Expense = mongoose.model('Expense',expenseSchema);
+
+export { Client, Expense };

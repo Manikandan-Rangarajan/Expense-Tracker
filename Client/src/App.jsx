@@ -11,6 +11,7 @@ import Login from './components/Login'
 import Tracker from './components/Tracker'
 import Dashboard from './components/Dashboard'
 import { BrowserRouter as Router,Routes,Route,Link } from 'react-router-dom'
+import Expense from './components/Expense'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,7 +19,7 @@ function App() {
   return (
     <Router>
       
-    {/* <Navbar/> */}
+    {/* <Expense/> */}
  <div className='min-h-screen flex flex-col items-center justify-center bg-gray-100 text-xl overflow-y-hidden'>
   <Routes>
   
