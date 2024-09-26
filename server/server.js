@@ -4,8 +4,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import mongoose from "mongoose";
-import { Client, Expense } from './db.js';
+import { Client, Expense, Report } from './db.js';
 import bcrypt from 'bcrypt';
+import { userInfo } from "os";
 
 const app = express();
 app.use(express.json());
@@ -13,7 +14,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors({
   origin: 'http://localhost:5000',
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
 
@@ -48,6 +49,26 @@ async function getUserWithExpenses(userId) {
     console.error('Error fetching user with expenses:', error);
   }
 }
+
+// Get Expenses for a User
+// Get Expenses for a User by Username
+app.get('/expenses/:username', async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const user = await Client.findOne({ username }).populate('expenses'); // Use username to find user
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json(user.expenses); // Return the expenses array
+  } catch (error) {
+    console.error('Error fetching expenses:', error);
+    res.status(500).json({ error: 'Failed to fetch expenses' });
+  }
+});
+
+
 
 // Sign-Up Route
 app.post('/signup', async (req, res) => {
@@ -87,7 +108,7 @@ app.post("/signin", async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, existingUser.password);
     
     if (isPasswordValid) {
-      return res.status(409).json({ message: "User exists" });
+      return res.status(409).json({ message: "User exists" ,existingUser});
     } else {
       return res.status(401).json({ message: "Invalid password" });
     }
@@ -97,20 +118,28 @@ app.post("/signin", async (req, res) => {
   }
 });
 
-// Add Expense Route
-app.post('/expenses', async (req, res) => {
-  const { userId, name, amount, date, category } = req.body;
+//adding-expense
+app.post('/add-expense', async (req, res) => {
+  const { name, amount, date, category, clientId } = req.body; // Include clientId in the request
+
+  const expense = new Expense({
+    name,
+    amount,
+    date,
+    category,
+    client: clientId, // Ensure you assign the client ID here
+  });
 
   try {
-    const expenseData = { name, amount, date, category };
-    await addExpenseToUser(userId, expenseData);
-    
-    res.status(200).json({ message: 'Expense added successfully' });
+    await expense.save();
+    // Optionally push the expense into the client's expenses array here
+    res.status(201).json(expense);
   } catch (error) {
     console.error('Error adding expense:', error);
-    res.status(500).json({ error: 'Failed to add expense' });
+    res.status(400).json({ error: 'Failed to add expense' });
   }
 });
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(path.resolve(), '../Client/dist', 'index.html'));

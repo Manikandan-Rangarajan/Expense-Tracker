@@ -15,11 +15,14 @@ import Expense from './components/Expense'
 
 function App() {
   const [count, setCount] = useState(0)
+  const clientId = localStorage.getItem('clientId');
 
   return (
     <Router>
       
-    {/* <Dashboard/> */}
+    {/* <History/>
+    {/* <Info/> */}
+    {/* <Report/> */}
  <div className='min-h-screen flex flex-col items-center justify-center bg-gray-100 text-xl overflow-y-hidden'>
   <Routes>
   
@@ -31,7 +34,7 @@ function App() {
      <Route path="/" element={<SignIn />} />
      <Route path="/login" element={<Login />} />
      <Route path="/api/names" element={<History />} />
-     <Route path="/expense" element={<Expense />} />
+     <Route path="/expense" element={<Expense clientId={clientId}/>} />
            {/* redirects unmatched path to home
            <Route path="*" element={<Navigate to="/" />} />  */}
    </Routes>

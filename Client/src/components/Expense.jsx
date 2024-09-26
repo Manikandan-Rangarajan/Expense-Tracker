@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Expense = () => {
+const Expense = ({ clientId }) => { 
 
-    
   const [expense, setExpense] = useState({
     name: '',
     amount: '',
@@ -12,6 +11,7 @@ const Expense = () => {
   });
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false); // Loading state
 
   // Handle input change
   const handleChange = (e) => {
@@ -38,10 +38,14 @@ const Expense = () => {
     e.preventDefault();
     const newErrors = validateFields();
     if (Object.keys(newErrors).length === 0) {
+      setLoading(true); // Set loading to true
       try {
         // Send POST request to backend using Axios
-        const response = await axios.post('http://localhost:5000/expenses', expense);
-        
+        const response = await axios.post('http://localhost:5000/expenses', {
+          ...expense,
+          client: clientId, // Include client ID
+        });
+
         // Handle successful response
         if (response.status === 200) {
           setConfirmationMessage('Expense added successfully!');
@@ -57,6 +61,8 @@ const Expense = () => {
       } catch (error) {
         console.error('Error adding expense:', error);
         setConfirmationMessage('Failed to add expense. Please try again.');
+      } finally {
+        setLoading(false); // Reset loading state
       }
     } else {
       setErrors(newErrors);
@@ -130,8 +136,9 @@ const Expense = () => {
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+            disabled={loading} // Disable button while loading
           >
-            Add Expense
+            {loading ? 'Adding...' : 'Add Expense'}
           </button>
         </form>
 

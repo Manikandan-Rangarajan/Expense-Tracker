@@ -71,7 +71,9 @@ const SignIn = () => {
             if (error.response && error.response.status === 409) {
               alert('User exists');
               navigate('/home')
+              const { clientId } = response.data
               localStorage.setItem('userId', user);
+              localStorage.setItem('clientId', clientId);
             } else {
               alert('Error Signning In');
               console.error(error);
