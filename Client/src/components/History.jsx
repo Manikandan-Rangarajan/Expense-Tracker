@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const History = () => {
   // State to manage expenses and pagination
-  const [expenses, setExpenses] = useState([
-    { id: 1, description: 'Groceries', category: 'Food', amount: 200, date: '2024-09-01' },
-    { id: 2, description: 'Rent', category: 'Housing', amount: 1000, date: '2024-09-02' },
-    { id: 3, description: 'Utilities', category: 'Bills', amount: 300, date: '2024-09-03' },
-    // More expenses...
-  ]);
+  const [expenses, setExpenses] = useState([]);
   const [filteredExpenses, setFilteredExpenses] = useState(expenses);
   const [currentPage, setCurrentPage] = useState(1);
   const expensesPerPage = 5;
@@ -24,32 +20,56 @@ const History = () => {
     currentPage * expensesPerPage
   );
 
+  const clientId = localStorage.getItem('clientId');
+
   // Filter expenses based on search term, category, and date range
-  useEffect(() => {
-    let filtered = expenses;
+  // useEffect(() => {
+  //   let filtered = expenses;
 
-    // Filter by search term
-    if (searchTerm) {
-      filtered = filtered.filter(exp =>
-        exp.description.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
+  //   // Filter by search term
+  //   if (searchTerm) {
+  //     filtered = filtered.filter(exp =>
+  //       exp.description.toLowerCase().includes(searchTerm.toLowerCase())
+  //     );
+  //   }
 
-    // Filter by category
-    if (categoryFilter) {
-      filtered = filtered.filter(exp => exp.category === categoryFilter);
-    }
+  //   // Filter by category
+  //   if (categoryFilter) {
+  //     filtered = filtered.filter(exp => exp.category === categoryFilter);
+  //   }
 
-    // Filter by date range
-    if (dateRange.from && dateRange.to) {
-      filtered = filtered.filter(exp =>
-        new Date(exp.date) >= new Date(dateRange.from) &&
-        new Date(exp.date) <= new Date(dateRange.to)
-      );
-    }
+  //   // Filter by date range
+  //   if (dateRange.from && dateRange.to) {
+  //     filtered = filtered.filter(exp =>
+  //       new Date(exp.date) >= new Date(dateRange.from) &&
+  //       new Date(exp.date) <= new Date(dateRange.to)
+  //     );
+  //   }
 
-    setFilteredExpenses(filtered);
-  }, [searchTerm, categoryFilter, dateRange, expenses]);
+  //   setFilteredExpenses(filtered);
+  // }, [searchTerm, categoryFilter, dateRange, expenses]);
+
+  useEffect(()=>{
+      const fetchData = async ()=>{
+        try{
+ 
+          const response = await axios.get(`http://localhost:5000/history`,
+            {headers:{"Authorization":`Bearer ${clientId}`}});
+          
+            if(response.status == 200){
+              const exp = response.data;
+              // console.log(exp);
+              // console.log(exp.map(expense => expense.name));
+              setExpenses(exp.map(expense => expense.amount));
+            }
+         
+
+        }catch(e){
+          console.error('Error fetching expenses:', e);
+        }
+      } 
+      fetchData();
+  })
 
   // Edit and Delete Functions
   const handleEdit = (id) => {
