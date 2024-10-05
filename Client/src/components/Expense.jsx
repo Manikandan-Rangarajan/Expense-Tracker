@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Expense = ({ clientId }) => { 
+const Expense = () => { 
+
+
+  const ClientId = localStorage.getItem('clientId')
 
   const [expense, setExpense] = useState({
     name: '',
@@ -41,10 +44,8 @@ const Expense = ({ clientId }) => {
       setLoading(true); // Set loading to true
       try {
         // Send POST request to backend using Axios
-        const response = await axios.post('http://localhost:5000/expenses', {
-          ...expense,
-          client: clientId, // Include client ID
-        });
+        const response = await axios.post('http://localhost:5000/add-expense', {
+          ...expense},{headers:{"Authorization":`Bearer ${ClientId}`,'X-Custom-Header': 'CustomValue'}});
 
         // Handle successful response
         if (response.status === 200) {

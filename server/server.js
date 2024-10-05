@@ -7,13 +7,15 @@ import mongoose from "mongoose";
 import { Client, Expense, Report } from './db.js';
 import bcrypt from 'bcrypt';
 import { userInfo } from "os";
+import jwt from 'jsonwebtoken'
 
 const app = express();
 app.use(express.json());
+const privatekey = 'Jokerpanda';
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(cors({
-  origin: 'http://localhost:5000',
+  origin: 'http://localhost:5173',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
@@ -23,7 +25,7 @@ mongoose.connect("mongodb://localhost:27017/expense")
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-app.use(express.static(path.join(path.resolve(), '../Client/dist')));
+// app.use(express.static(path.join(path.resolve(), '../Client/dist')));
 
 // Function to add an expense for a specific user
 async function addExpenseToUser(userId, expenseData) {
@@ -39,7 +41,30 @@ async function addExpenseToUser(userId, expenseData) {
   } catch (error) {
     console.error('Error adding expense:', error);
   }
-}
+} 
+
+const verifyToken = async (req,res,next)=>{
+    const token = req.headers.authorization
+    const ftoken = token.split(' ')[1];
+  
+    try {
+      jwt.verify(ftoken, privatekey, (err, decoded) => {
+        if (err) {
+          console.log(err);
+          return 
+        } else {
+          console.log(decoded);
+          req.clientId = decoded.ClientId;
+        }
+      }); 
+      next(); 
+    } catch (err) {
+      res.status(401).send('Invalid token');
+    }
+  }
+  
+  
+  
 
 async function getUserWithExpenses(userId) {
   try {
@@ -50,18 +75,19 @@ async function getUserWithExpenses(userId) {
   }
 }
 
-// Get Expenses for a User
-// Get Expenses for a User by Username
-app.get('/expenses/:username', async (req, res) => {
-  const { username } = req.params;
+
+app.get('/expenses', verifyToken,async (req, res) => {
+  // const { username } = req.params;
+  const { clientId} = req.clientId;
 
   try {
-    const user = await Client.findOne({ username }).populate('expenses'); // Use username to find user
+    const user = await Expense.find({ clientId });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    res.status(200).json(user.expenses); // Return the expenses array
+     
+    console.log(user)
+    res.status(200).json(user); 
   } catch (error) {
     console.error('Error fetching expenses:', error);
     res.status(500).json({ error: 'Failed to fetch expenses' });
@@ -99,7 +125,8 @@ app.post("/signin", async (req, res) => {
   
   try {
     const existingUser = await Client.findOne({ name });
-
+    // console.log(existingUser._doc._id);
+    // console.log(existingUser._id);
     if (!existingUser) {
       return res.status(400).json({ message: "User does not exist" });
     }
@@ -108,7 +135,9 @@ app.post("/signin", async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, existingUser.password);
     
     if (isPasswordValid) {
-      return res.status(409).json({ message: "User exists" ,existingUser});
+      const token = jwt.sign({ClientId:existingUser._id},privatekey,{expiresIn:'2h'});
+      console.log(token);
+      return res.status(200).json({ message: "User exists" ,token});
     } else {
       return res.status(401).json({ message: "Invalid password" });
     }
@@ -119,21 +148,24 @@ app.post("/signin", async (req, res) => {
 });
 
 //adding-expense
-app.post('/add-expense', async (req, res) => {
-  const { name, amount, date, category, clientId } = req.body; // Include clientId in the request
+app.post('/add-expense', verifyToken,async (req, res) => {
+  const { name, amount, date, category} = req.body; 
+  const cId = req.clientId
+  console.log(cId)
 
   const expense = new Expense({
     name,
     amount,
     date,
     category,
-    client: clientId, // Ensure you assign the client ID here
+    client: cId,
   });
+  const user = await Client.findOne({ cId })
 
   try {
-    await expense.save();
+    await expense.save(); 
     // Optionally push the expense into the client's expenses array here
-    res.status(201).json(expense);
+    res.status(200).json(expense);
   } catch (error) {
     console.error('Error adding expense:', error);
     res.status(400).json({ error: 'Failed to add expense' });
@@ -141,9 +173,9 @@ app.post('/add-expense', async (req, res) => {
 });
 
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(path.resolve(), '../Client/dist', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(path.resolve(), '../Client/dist', 'index.html'));
+// });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

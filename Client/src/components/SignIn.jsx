@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faInfoCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faColonSign, faInfoCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -62,18 +62,19 @@ const SignIn = () => {
 
         try {
             const response = await axios.post('http://localhost:5000/signin', { name:user, password:pwd });
+            console.log(response);
             
-            if (response.status === 201) {
-              alert('Alert user does not exists.Click ok to Sign-In');
-              navigate('/login')
+            if (response.status === 200) {
+                alert('User exists');
+                navigate('/home')
+                console.log(response.data.token);
+                const clientId = response.data.token;
+                localStorage.setItem('clientId', clientId);
             }
           } catch (error) {
-            if (error.response && error.response.status === 409) {
-              alert('User exists');
-              navigate('/home')
-              const { clientId } = response.data
-              localStorage.setItem('userId', user);
-              localStorage.setItem('clientId', clientId);
+            if (error.response && error.response.status === 401) {
+              alert('User does not exists');
+              navigate('/signup')
             } else {
               alert('Error Signning In');
               console.error(error);

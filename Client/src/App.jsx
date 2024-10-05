@@ -34,7 +34,7 @@ function App() {
      <Route path="/" element={<SignIn />} />
      <Route path="/login" element={<Login />} />
      {/* <Route path="/api/names" element={<History />} /> */}
-     <Route path="/expense" element={<Expense clientId={clientId}/>} />
+     <Route path="/expense" element={<Expense />} />
            {/* redirects unmatched path to home
            <Route path="*" element={<Navigate to="/" />} />  */}
    </Routes>

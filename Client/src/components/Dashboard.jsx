@@ -20,15 +20,17 @@ const Dashboard = () => {
   const [expenseData, setExpenseData] = useState([]); // Expense data for pie chart
 
   const navigate = useNavigate();
-  const userId = localStorage.getItem('userId'); 
-  console.log(userId)// Replace with the actual user ID
+
+  const clientId = localStorage.getItem('clientId')
+  console.log(clientId)
 
   // Fetch expenses data from backend
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/expenses/${userId}`);
+        const response = await axios.get(`http://localhost:5000/expenses`,{headers:{"Authorization":`Bearer ${clientId}`}});
         const expenses = response.data;
+        console.log(expenses)
 
         // Update the state with fetched data
         setRecentTransactions(expenses);
@@ -67,7 +69,13 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, [userId]);
+  }, [clientId]);
+
+  // useEffect(()=>{
+  //  const fetchdata = async ()=>{
+  //     const resp = await axios.get('http://localhost:5000/')
+  //  }
+  // })
 
   const handleSubmit = async () => {
     navigate('/expense');
