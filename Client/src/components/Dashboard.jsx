@@ -25,51 +25,51 @@ const Dashboard = () => {
   console.log(clientId)
 
   // Fetch expenses data from backend
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/expenses`,{headers:{"Authorization":`Bearer ${clientId}`}});
-        const expenses = response.data;
-        console.log(expenses)
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(`http://localhost:5000/expenses`,{headers:{"Authorization":`Bearer ${clientId}`}});
+  //       const expenses = response.data;
+  //       console.log(expenses.map(expense => expense.amount))
 
-        // Update the state with fetched data
-        setRecentTransactions(expenses);
+  //       // Update the state with fetched data
+  //       setRecentTransactions(expenses.map(expense => expense.amount));
 
         // Calculate the total expenses for this month
-        const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
-        setTotalExpenses(total);
+        // const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+        // setTotalExpenses(total);
 
         // Group expenses by category for the pie chart
         const categories = {};
-        expenses.forEach((expense) => {
-          if (categories[expense.category]) {
-            categories[expense.category] += expense.amount;
-          } else {
-            categories[expense.category] = expense.amount;
-          }
-        });
+        // expenses.forEach((expense) => {
+        //   if (categories[expense.category]) {
+        //     categories[expense.category] += expense.amount;
+        //   } else {
+        //     categories[expense.category] = expense.amount;
+        //   }
+        // });
 
-        const chartData = {
-          labels: Object.keys(categories),
-          datasets: [
-            {
-              label: 'Expenses by Category',
-              data: Object.values(categories),
-              backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0'],
-              hoverBackgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0'],
-              borderWidth: 1,
-            },
-          ],
-        };
+        // const chartData = {
+        //   labels: Object.keys(categories),
+        //   datasets: [
+        //     {
+        //       label: 'Expenses by Category',
+        //       data: Object.values(categories),
+        //       backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0'],
+        //       hoverBackgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0'],
+        //       borderWidth: 1,
+        //     },
+        //   ],
+        // };
 
-        setExpenseData(chartData);
-      } catch (error) {
-        console.error('Error fetching expenses:', error);
-      }
-    };
+    //     setExpenseData(chartData);
+    //   } catch (error) {
+    //     console.error('Error fetching expenses:', error);
+    //   }
+    // };
 
-    fetchData();
-  }, [clientId]);
+  //   fetchData();
+  // }, [clientId]);
 
   // useEffect(()=>{
   //  const fetchdata = async ()=>{
@@ -88,16 +88,16 @@ const Dashboard = () => {
       {/* Total Expense */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-6">
         <h2 className="text-lg font-bold mb-2">Total Expenses (This Month)</h2>
-        <p className="text-3xl">{`$${totalExpenses}`}</p>
+        {/* <p className="text-3xl">{`$${totalExpenses}`}</p> */}
       </div>
 
       {/* Pie Chart for Expenses by Category */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-6">
         <h2 className="text-lg font-bold mb-4">Expenses by Category</h2>
         <div className="flex justify-center">
-          <div style={{ width: '40%', height: '40%' }}>
+          {/* <div style={{ width: '40%', height: '40%' }}>
             <Pie data={expenseData} />
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -105,7 +105,7 @@ const Dashboard = () => {
       <div className="bg-white p-6 rounded-lg shadow-md mb-6">
         <h2 className="text-lg font-bold mb-4">Recent Transactions</h2>
         <ul>
-          {recentTransactions.map((transaction) => (
+          {/* {recentTransactions.map((transaction) => (
             <li key={transaction._id} className="flex justify-between items-center p-2 border-b">
               <span>{transaction.name}</span>
               <span>{`$${transaction.amount}`}</span>
@@ -113,7 +113,7 @@ const Dashboard = () => {
               <button className="bg-blue-500 text-white px-3 py-1 rounded-md">Edit</button>
               <button className="bg-red-500 text-white px-3 py-1 rounded-md">Delete</button>
             </li>
-          ))}
+          ))} */}
         </ul>
       </div>
 
