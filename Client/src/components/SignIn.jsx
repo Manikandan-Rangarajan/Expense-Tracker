@@ -62,7 +62,7 @@ const SignIn = () => {
 
         try {
             const response = await axios.post('http://localhost:5000/signin', { name:user, password:pwd });
-            console.log(response);
+            console.log(response.data);
             
             if (response.status === 200) {
                 alert('User exists');

@@ -175,6 +175,7 @@ const Dashboard = () => {
           headers: { "Authorization": `Bearer ${clientId}` }
         });
         const expenses = response.data;
+        console.log(expenses)
 
         // Update the state with fetched data
         setRecentTransactions(expenses);

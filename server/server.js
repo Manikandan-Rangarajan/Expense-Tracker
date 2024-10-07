@@ -53,7 +53,7 @@ const verifyToken = async (req,res,next)=>{
           console.log(err);
           return 
         } else {
-          console.log(decoded);
+          console.log(decoded.ClientId);
           req.clientId = decoded.ClientId;
         }
       }); 
@@ -91,16 +91,18 @@ app.get("/history", verifyToken, async(req,res)=>{
 })
 
 
-app.get('/expenses', verifyToken,async (req, res) => {
+app.get('/expenses', verifyToken ,async (req, res) => {
   // const { username } = req.params;
-  const { clientId} = req.clientId;
+  const { clientId} = req;
+  console.log(clientId, " from /expense");
 
   try {
-    const user = await Expense.find({ clientId });
+    const user = await Expense.find({ client:clientId });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
     res.status(200).json(user); 
+    
   } catch (error) {
     console.error('Error fetching expenses:', error);
     res.status(500).json({ error: 'Failed to fetch expenses' });
