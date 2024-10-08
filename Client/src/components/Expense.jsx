@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Expense = () => { 
 
@@ -15,6 +16,7 @@ const Expense = () => {
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false); // Loading state
+  const navigate = useNavigate();
 
   // Handle input change
   const handleChange = (e) => {
@@ -58,6 +60,8 @@ const Expense = () => {
             date: new Date().toISOString().split('T')[0],
             category: 'Food',
           });
+          setTimeout('10s')
+          navigate('/home')
         }
       } catch (error) {
         console.error('Error adding expense:', error);
