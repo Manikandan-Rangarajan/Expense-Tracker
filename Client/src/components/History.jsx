@@ -24,31 +24,31 @@ const History = () => {
   const clientId = localStorage.getItem('clientId');
 
   // Filter expenses based on search term, category, and date range
-  // useEffect(() => {
-  //   let filtered = expenses;
+  useEffect(() => {
+    let filtered = expenses;
 
-  //   // Filter by search term
-  //   if (searchTerm) {
-  //     filtered = filtered.filter(exp =>
-  //       exp.description.toLowerCase().includes(searchTerm.toLowerCase())
-  //     );
-  //   }
+    // Filter by search term
+    if (searchTerm) {
+      filtered = filtered.filter(exp =>
+        exp.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
 
-  //   // Filter by category
-  //   if (categoryFilter) {
-  //     filtered = filtered.filter(exp => exp.category === categoryFilter);
-  //   }
+    // Filter by category
+    if (categoryFilter) {
+      filtered = filtered.filter(exp => exp.category === categoryFilter);
+    }
 
-  //   // Filter by date range
-  //   if (dateRange.from && dateRange.to) {
-  //     filtered = filtered.filter(exp =>
-  //       new Date(exp.date) >= new Date(dateRange.from) &&
-  //       new Date(exp.date) <= new Date(dateRange.to)
-  //     );
-  //   }
+    // Filter by date range
+    if (dateRange.from && dateRange.to) {
+      filtered = filtered.filter(exp =>
+        new Date(exp.date) >= new Date(dateRange.from) &&
+        new Date(exp.date) <= new Date(dateRange.to)
+      );
+    }
 
-  //   setFilteredExpenses(filtered);
-  // }, [searchTerm, categoryFilter, dateRange, expenses]);
+    setFilteredExpenses(filtered);
+  }, [searchTerm, categoryFilter, dateRange, expenses]);
 
   useEffect(()=>{
       const fetchData = async ()=>{
@@ -61,7 +61,7 @@ const History = () => {
               const exp = response.data;
               // console.log(exp);
               // console.log(exp.map(expense => expense.name));
-              setExpenses(exp.map(expense => expense.amount));
+              setExpenses(response.data);
             }
          
 
@@ -70,7 +70,7 @@ const History = () => {
         }
       } 
       fetchData();
-  })
+  },[clientId])
 
   // Edit and Delete Functions
   const handleEdit = (id) => {
@@ -125,7 +125,7 @@ const History = () => {
               <option value="">All</option>
               <option value="Food">Food</option>
               <option value="Housing">Housing</option>
-              <option value="Bills">Bills</option>
+              <option value="Transportation">Transportation</option>
               {/* Add more categories here */}
             </select>
           </div>
@@ -149,7 +149,7 @@ const History = () => {
         <h2 className="text-lg font-bold mb-4">Expenses</h2>
         <ul>
           {currentExpenses.map(exp => (
-            <li key={exp.id} className="flex justify-between items-center p-2 border-b">
+            <li key={exp.id} className="flex justify-between items-center p-2 border-b w-[600px]">
               <span>{exp.description}</span>
               <span>{`$${exp.amount}`}</span>
               <span>{exp.date}</span>

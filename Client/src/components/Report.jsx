@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { saveAs } from 'file-saver';
 import Navbar from './Navbar';
+import axios from 'axios';
 
-const Report = ({ expenses }) => {
+const Report = () => {
   const [selectedPeriod, setSelectedPeriod] = useState({ type: 'monthly', month: '', year: '' });
   const [filteredExpenses, setFilteredExpenses] = useState([]);
+  const [expenses, setExpenses] = useState([]); // Expense data for pie chart
   
+
+  useEffect(()=>{
+    const fetchData = async ()=>{
+      try{
+        const response = await axios.get(`http://localhost:5000/report`, {
+          headers: { "Authorization": `Bearer ${clientId}` }})
+          console.log(response.data)
+          setExpenses(response.data);
+      }catch(e){
+        
+      }
+    }
+    fetchData();
+  })
   // Dummy data for the bar chart
   const barData = {
     labels: [], // Days of the month or months of the year

@@ -90,6 +90,20 @@ app.get("/history", verifyToken, async(req,res)=>{
      }
 })
 
+app.get("/report", verifyToken, async(req,res)=>{
+  const {clientId} = req.clientId;
+
+  try{ 
+      const user = await Expense.find({clientId});
+      if(!user){
+       return res.status(404).json.apply({message: 'Data not found'});
+      }
+
+      res.status(200).json(user);
+  }catch(e){
+
+  }
+})
 
 app.get('/expenses', verifyToken ,async (req, res) => {
   // const { username } = req.params;
