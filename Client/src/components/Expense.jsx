@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 
 const Expense = () => { 
 
@@ -17,6 +18,11 @@ const Expense = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false); // Loading state
   const navigate = useNavigate();
+  let timeout = ()=>{
+         setTimeout(3000,navigate('/home'))
+  }
+
+
 
   // Handle input change
   const handleChange = (e) => {
@@ -60,8 +66,7 @@ const Expense = () => {
             date: new Date().toISOString().split('T')[0],
             category: 'Food',
           });
-          setTimeout('10s')
-          navigate('/home')
+          timeout();
         }
       } catch (error) {
         console.error('Error adding expense:', error);
@@ -76,6 +81,8 @@ const Expense = () => {
   };
 
   return (
+    <div>
+      <Navbar/>
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6">Add Expense</h2>
@@ -154,6 +161,7 @@ const Expense = () => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };

@@ -12,6 +12,7 @@ import Tracker from './components/Tracker'
 import Dashboard from './components/Dashboard'
 import { BrowserRouter as Router,Routes,Route,Link } from 'react-router-dom'
 import Expense from './components/Expense'
+import Logout from './components/Logout'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -33,6 +34,7 @@ function App() {
      <Route path="/tracker" element={<Tracker />} />
      <Route path="/" element={<SignIn />} />
      <Route path="/login" element={<Login />} />
+     <Route path="/logout" element={<Logout />} />
      {/* <Route path="/api/names" element={<History />} /> */}
      <Route path="/expense" element={<Expense />} />
            {/* redirects unmatched path to home

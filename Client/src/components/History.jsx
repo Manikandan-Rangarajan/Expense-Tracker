@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Navbar from './Navbar';
 
 const History = () => {
   // State to manage expenses and pagination
@@ -83,6 +84,9 @@ const History = () => {
   };
 
   return (
+    <div className="">
+      <Navbar/>
+    
     <div className="container mx-auto p-5">
       <h1 className="text-2xl font-bold mb-4">Expense History</h1>
 
@@ -174,6 +178,7 @@ const History = () => {
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 };

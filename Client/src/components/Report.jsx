@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { saveAs } from 'file-saver';
+import Navbar from './Navbar';
 
 const Report = ({ expenses }) => {
   const [selectedPeriod, setSelectedPeriod] = useState({ type: 'monthly', month: '', year: '' });
@@ -69,6 +70,8 @@ const Report = ({ expenses }) => {
   };
 
   return (
+    <div>
+      <Navbar/>
     <div className="container mx-auto p-5">
       <h1 className="text-2xl font-bold mb-4">Expense Reports</h1>
 
@@ -124,6 +127,7 @@ const Report = ({ expenses }) => {
         <button onClick={handleDownload} className="bg-green-500 text-white px-4 py-2 rounded-lg">Download CSV</button>
         <button onClick={() => window.print()} className="bg-gray-500 text-white px-4 py-2 rounded-lg">Print Report</button>
       </div>
+    </div>
     </div>
   );
 };

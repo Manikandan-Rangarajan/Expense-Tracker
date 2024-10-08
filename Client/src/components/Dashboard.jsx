@@ -154,6 +154,7 @@ import 'tailwindcss/tailwind.css';
 import axios from 'axios'; // Import axios for API requests
 import { useNavigate } from 'react-router-dom';
 import Loader from './Loader'; // Import the loader
+import Navbar from './Navbar';
 
 // Register the necessary elements for the pie chart
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -229,6 +230,9 @@ const Dashboard = () => {
 
   return (
     <div className="container mx-auto p-5">
+      <div className='m-[50px]'>
+      <Navbar/>
+      </div>
       <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
 
       {/* Total Expense */}
