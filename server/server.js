@@ -63,8 +63,6 @@ const verifyToken = async (req,res,next)=>{
     }
   }
   
-  
-  
 
 async function getUserWithExpenses(userId) {
   try {
@@ -76,7 +74,7 @@ async function getUserWithExpenses(userId) {
 }
 
 app.get("/history", verifyToken, async(req,res)=>{
-     const {clientId} = req.clientId;
+     const {clientId} = req;
 
      try{ 
          const user = await Expense.find({clientId});
@@ -91,7 +89,7 @@ app.get("/history", verifyToken, async(req,res)=>{
 })
 
 app.get("/report", verifyToken, async(req,res)=>{
-  const {clientId} = req.clientId;
+  const {clientId} = req;
 
   try{ 
       const user = await Expense.find({clientId});

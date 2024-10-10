@@ -223,6 +223,24 @@ const Dashboard = () => {
     navigate('/expense');
   };
 
+  const handleDelete = async (transactionId) => {
+
+    try{
+      const response = await axios.delete(`https://localhost:5000/${transactionId}`, {
+        headers: { "Authorization": `Bearer ${clientId}` }})
+
+        if(response.status == 200){
+          setRecentTransactions(recentTransactions.filter(transaction => transaction._id !== transactionId));
+        }
+    }catch(error){
+
+    }
+  };
+
+  const handleEdit = async (e) => {
+    navigate('/expense');
+  };
+
   // Show loader while loading data
   if (loading) {
     return <Loader />;
@@ -260,8 +278,8 @@ const Dashboard = () => {
               <span>{transaction.name}</span>
               <span>{`$${transaction.amount}`}</span>
               <span>{new Date(transaction.date).toLocaleDateString()}</span>
-              <button className="bg-blue-500 text-white px-3 py-1 rounded-md">Edit</button>
-              <button className="bg-red-500 text-white px-3 py-1 rounded-md">Delete</button>
+              <button onClick={()=>handleEdit(transaction._id)} className="bg-blue-500 text-white px-3 py-1 rounded-md">Edit</button>
+              <button onClick={()=>handleDelete(transaction._id)} className="bg-red-500 text-white px-3 py-1 rounded-md">Delete</button>
             </li>
           )) : <p>No transactions available.</p>}
         </ul>
