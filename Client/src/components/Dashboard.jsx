@@ -209,7 +209,7 @@ const Dashboard = () => {
         };
 
         setExpenseData(chartData);
-        setLoading(false); // Hide the loader after data is fetched
+         setLoading(false); 
       } catch (error) {
         console.error('Error fetching expenses:', error);
         setLoading(false); // Hide the loader even if there is an error
@@ -223,19 +223,48 @@ const Dashboard = () => {
     navigate('/expense');
   };
 
+  // const handleDelete = async (transactionId) => {
+
+  //   try{
+  //     const response = await axios.post("http://localhost:5000/deleteTransaction", {id: transactionId},{
+  //       headers: { "Authorization": `Bearer ${clientId}` }})
+
+  //       if(response.status == 200){
+  //         setRecentTransactions(recentTransactions.filter(transaction => transaction._id !== transactionId));
+  //       }
+  //   }catch(error){
+
+  //   }
+  // };
+
   const handleDelete = async (transactionId) => {
-
     try{
-      const response = await axios.delete(`https://localhost:5000/${transactionId}`, {
-        headers: { "Authorization": `Bearer ${clientId}` }})
-
-        if(response.status == 200){
-          setRecentTransactions(recentTransactions.filter(transaction => transaction._id !== transactionId));
+      const payload = { id: transactionId }
+      // Send a POST request to delete the transaction, including the transaction ID and authorization token
+      const response = await axios.post(
+        "http://localhost:5000/deleteTransaction",
+        payload,
+// Data payload containing the transaction ID
+        {
+          headers: { 
+            "Authorization": `Bearer ${clientId}` // Authorization token from clientId
+          }
         }
-    }catch(error){
-
+      );
+  
+      // If the response status is 200, remove the deleted transaction from the recent transactions list
+      if (response.status === 200) {
+        setRecentTransactions((prevTransactions) =>
+          prevTransactions.filter(transaction => transaction._id !== transactionId)
+        );
+      } else {
+        console.error('Failed to delete the transaction');
+      }
+    } catch (error) {
+      console.error('Error deleting the transaction:', error);
     }
   };
+  
 
   const handleEdit = async (e) => {
     navigate('/expense');

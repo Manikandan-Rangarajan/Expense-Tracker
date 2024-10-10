@@ -22,6 +22,7 @@ const History = () => {
   );
 
   const clientId = localStorage.getItem('clientId');
+  console.log(clientId)
 
   // Filter expenses based on search term, category, and date range
   useEffect(() => {
@@ -59,7 +60,7 @@ const History = () => {
           
             if(response.status == 200){
               const exp = response.data;
-              // console.log(exp);
+              console.log(exp);
               // console.log(exp.map(expense => expense.name));
               setExpenses(response.data);
             }
@@ -72,15 +73,38 @@ const History = () => {
       fetchData();
   },[clientId])
 
-  // Edit and Delete Functions
-  const handleEdit = (id) => {
-    // Logic to edit expense with the given id
-    console.log('Edit expense with ID:', id);
-  };
 
-  const handleDelete = (id) => {
-    // Logic to delete expense with the given id
-    setExpenses(expenses.filter(exp => exp.id !== id));
+  const handleDelete = async (transactionId) => {
+    try{
+      const payload = { id: transactionId }
+      // Send a POST request to delete the transaction, including the transaction ID and authorization token
+      const response = await axios.post(
+        "http://localhost:5000/deleteTransaction",
+        payload,
+// Data payload containing the transaction ID
+        {
+          headers: { 
+            "Authorization": `Bearer ${clientId}` // Authorization token from clientId
+          }
+        }
+      );
+  
+      // If the response status is 200, remove the deleted transaction from the recent transactions list
+      if (response.status === 200) {
+        setExpenses((prevTransactions) =>
+          prevTransactions.filter(transaction => transaction._id !== transactionId)
+        );
+      } else {
+        console.error('Failed to delete the transaction');
+      }
+    } catch (error) {
+      console.error('Error deleting the transaction:', error);
+    }
+  };
+  
+
+  const handleEdit = async (e) => {
+    navigate('/expense');
   };
 
   return (

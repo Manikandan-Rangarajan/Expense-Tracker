@@ -54,7 +54,7 @@ const verifyToken = async (req,res,next)=>{
           return 
         } else {
           console.log(decoded.ClientId);
-          req.clientId = decoded.ClientId;
+          req.body.clientId = decoded.ClientId;
         }
       }); 
       next(); 
@@ -73,11 +73,26 @@ async function getUserWithExpenses(userId) {
   }
 }
 
+app.post("/deleteTransaction",verifyToken, async(req,res)=>{
+    const {clientId} = req.body;
+    const transactionId = req.body.id;
+
+     console.log(transactionId);
+
+    try{
+      await Expense.deleteOne({_id:transactionId});
+     return res.status(200).json({message:"Transaction deleted successfully"})
+    }catch(error){
+      res.status(401).json({ error });
+    }
+})
+
 app.get("/history", verifyToken, async(req,res)=>{
-     const {clientId} = req;
+     const {clientId} = req.body;
+    //  console.log(clientId)
 
      try{ 
-         const user = await Expense.find({clientId});
+         const user = await Expense.find({client:clientId});
          if(!user){
           return res.status(404).json.apply({message: 'Data not found'});
          }
@@ -89,7 +104,7 @@ app.get("/history", verifyToken, async(req,res)=>{
 })
 
 app.get("/report", verifyToken, async(req,res)=>{
-  const {clientId} = req;
+  const {clientId} = req.body;
 
   try{ 
       const user = await Expense.find({clientId});
@@ -105,7 +120,7 @@ app.get("/report", verifyToken, async(req,res)=>{
 
 app.get('/expenses', verifyToken ,async (req, res) => {
   // const { username } = req.params;
-  const { clientId} = req;
+  const { clientId} = req.body;
   console.log(clientId, " from /expense");
 
   try {
@@ -177,7 +192,7 @@ app.post("/signin", async (req, res) => {
 //adding-expense
 app.post('/add-expense', verifyToken,async (req, res) => {
   const { name, amount, date, category} = req.body; 
-  const cId = req.clientId
+  const cId = req.body.clientId
   console.log(cId)
 
   const expense = new Expense({
