@@ -21,7 +21,7 @@ app.use(cors({
 }));
 
 // MongoDB Connection
-mongoose.connect("mongodb://localhost:27017/expense")
+mongoose.connect("mongodb+srv://JokerPanda27:JokerPanda27@cluster0.sgjbtve.mongodb.net/mydatabase?retryWrites=true&w=majority&appName=Cluster0")
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
