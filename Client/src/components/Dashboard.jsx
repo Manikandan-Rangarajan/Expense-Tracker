@@ -155,7 +155,7 @@ import axios from 'axios'; // Import axios for API requests
 import { useNavigate } from 'react-router-dom';
 import Loader from './Loader'; // Import the loader
 import Navbar from './Navbar';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
 // Register the necessary elements for the pie chart
 ChartJS.register(ArcElement, Tooltip, Legend);

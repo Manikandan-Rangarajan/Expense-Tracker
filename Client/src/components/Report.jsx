@@ -3,6 +3,7 @@ import { Bar } from 'react-chartjs-2';
 import { saveAs } from 'file-saver';
 import Navbar from './Navbar';
 import axios from 'axios';
+import dotenv from 'dotenv';
 
 const Report = () => {
   const [selectedPeriod, setSelectedPeriod] = useState({ type: 'monthly', month: '', year: '' });

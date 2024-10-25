@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faColonSign, faInfoCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import dotenv from 'dotenv';
 
 const SignIn = () => {
     const USER_REGX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
