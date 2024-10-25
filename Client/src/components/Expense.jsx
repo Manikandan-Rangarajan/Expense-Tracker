@@ -52,7 +52,7 @@ const Expense = () => {
       setLoading(true); // Set loading to true
       try {
         // Send POST request to backend using Axios
-        const response = await axios.post('http://localhost:3000/add-expense', {
+        const response = await axios.post('http://51.20.190.73:5000/add-expense', {
           ...expense},{headers:{"Authorization":`Bearer ${ClientId}`,'X-Custom-Header': 'CustomValue'}});
 
         // Handle successful response

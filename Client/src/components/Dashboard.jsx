@@ -30,7 +30,7 @@
 //   useEffect(() => {
 //     const fetchData = async () => {
 //       try {
-//         const response = await axios.get(`http://localhost:5000/expenses`,{headers:{"Authorization":`Bearer ${clientId}`}});
+//         const response = await axios.get(`http://51.20.190.73:5000/expenses`,{headers:{"Authorization":`Bearer ${clientId}`}});
 //         const expenses = response.data;
 //         // console.log(expenses.map(expense => expense.amount))
 //         console.log(expenses)
@@ -83,7 +83,7 @@
 
 //   // useEffect(()=>{
 //   //  const fetchdata = async ()=>{
-//   //     const resp = await axios.get('http://localhost:5000/')
+//   //     const resp = await axios.get('http://51.20.190.73:5000/')
 //   //  }
 //   // })
 
@@ -172,7 +172,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/expenses`, {
+        const response = await axios.get(`http://51.20.190.73:5000/expenses`, {
           headers: { "Authorization": `Bearer ${clientId}` }
         });
         const expenses = response.data;
@@ -226,7 +226,7 @@ const Dashboard = () => {
   // const handleDelete = async (transactionId) => {
 
   //   try{
-  //     const response = await axios.post("http://localhost:5000/deleteTransaction", {id: transactionId},{
+  //     const response = await axios.post("http://51.20.190.73:5000/deleteTransaction", {id: transactionId},{
   //       headers: { "Authorization": `Bearer ${clientId}` }})
 
   //       if(response.status == 200){
@@ -242,7 +242,7 @@ const Dashboard = () => {
       const payload = { id: transactionId }
       // Send a POST request to delete the transaction, including the transaction ID and authorization token
       const response = await axios.post(
-        "http://localhost:3000/deleteTransaction",
+        "http://51.20.190.73:3000/deleteTransaction",
         payload,
 // Data payload containing the transaction ID
         {
