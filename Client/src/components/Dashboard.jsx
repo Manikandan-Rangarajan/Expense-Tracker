@@ -242,7 +242,7 @@ const Dashboard = () => {
       const payload = { id: transactionId }
       // Send a POST request to delete the transaction, including the transaction ID and authorization token
       const response = await axios.post(
-        "http://localhost:5000/deleteTransaction",
+        "http://localhost:3000/deleteTransaction",
         payload,
 // Data payload containing the transaction ID
         {

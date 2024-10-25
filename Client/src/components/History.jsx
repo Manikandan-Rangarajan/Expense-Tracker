@@ -55,7 +55,7 @@ const History = () => {
       const fetchData = async ()=>{
         try{
  
-          const response = await axios.get(`http://localhost:5000/history`,
+          const response = await axios.get(`http://localhost:3000/history`,
             {headers:{"Authorization":`Bearer ${clientId}`}});
           
             if(response.status == 200){
@@ -79,7 +79,7 @@ const History = () => {
       const payload = { id: transactionId }
       // Send a POST request to delete the transaction, including the transaction ID and authorization token
       const response = await axios.post(
-        "http://localhost:5000/deleteTransaction",
+        "http://localhost:3000/deleteTransaction",
         payload,
 // Data payload containing the transaction ID
         {

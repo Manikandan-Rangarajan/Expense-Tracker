@@ -64,7 +64,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:5000/signup', {
+            const response = await axios.post('http://localhost:3000/signup', {
                 name: user,
                 password: pwd ,// Updated field name,
                 email:email
