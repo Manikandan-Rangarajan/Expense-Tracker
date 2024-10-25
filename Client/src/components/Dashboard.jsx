@@ -155,6 +155,7 @@ import axios from 'axios'; // Import axios for API requests
 import { useNavigate } from 'react-router-dom';
 import Loader from './Loader'; // Import the loader
 import Navbar from './Navbar';
+import dotenv from 'dotenv'
 
 // Register the necessary elements for the pie chart
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -172,7 +173,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/expenses`, {
+        const response = await axios.get(`${process.env.url}/expenses`, {
           headers: { "Authorization": `Bearer ${clientId}` }
         });
         const expenses = response.data;
@@ -242,7 +243,7 @@ const Dashboard = () => {
       const payload = { id: transactionId }
       // Send a POST request to delete the transaction, including the transaction ID and authorization token
       const response = await axios.post(
-        "http://localhost:3000/deleteTransaction",
+        `${process.env.url}/deleteTransaction`,
         payload,
 // Data payload containing the transaction ID
         {

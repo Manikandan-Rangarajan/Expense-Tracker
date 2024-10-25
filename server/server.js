@@ -15,7 +15,7 @@ const privatekey = 'Jokerpanda';
 
 // app.use(bodyParser.json());
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'http://51.20.190.73:5173' || 'http://localhost:5173',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
@@ -219,7 +219,7 @@ app.post('/add-expense', verifyToken,async (req, res) => {
 //   res.sendFile(path.join(path.resolve(), '../Client/dist', 'index.html'));
 // });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
 });
