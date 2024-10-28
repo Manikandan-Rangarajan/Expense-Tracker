@@ -168,14 +168,14 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const clientId = localStorage.getItem('clientId');
-  const baseurl = import.meta.env.url;
+  const baseurl = import.meta.env.VITE_URL;
 
 
   // Fetch expenses data from backend
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${import.meta.VITE_URL}/expenses`, {
+        const response = await axios.get(`${baseurl}/expenses`, {
           headers: { "Authorization": `Bearer ${clientId}` }
         });
         const expenses = response.data;

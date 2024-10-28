@@ -9,7 +9,7 @@ const Report = () => {
   const [selectedPeriod, setSelectedPeriod] = useState({ type: 'monthly', month: '', year: '' });
   const [filteredExpenses, setFilteredExpenses] = useState([]);
   const [expenses, setExpenses] = useState([]); // Expense data for pie chart
-  const baseurl = import.meta.env.url;
+  const baseurl = import.meta.env.VITE_URL;
 
 
   useEffect(()=>{

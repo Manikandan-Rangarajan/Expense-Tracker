@@ -15,7 +15,7 @@ const privatekey = 'Jokerpanda';
 
 // app.use(bodyParser.json());
 app.use(cors({
-  origin: 'http://51.20.190.73:5173' || 'http://localhost:5173',
+  origin: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));

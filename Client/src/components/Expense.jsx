@@ -19,7 +19,7 @@ const Expense = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false); // Loading state
   const navigate = useNavigate();
-  const baseurl = import.meta.env.url;
+  const baseurl = import.meta.env.VITE_URL;
 
   let timeout = ()=>{
          setTimeout(3000,navigate('/home'))
