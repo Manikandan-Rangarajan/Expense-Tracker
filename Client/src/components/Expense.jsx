@@ -19,6 +19,8 @@ const Expense = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false); // Loading state
   const navigate = useNavigate();
+  const baseurl = import.meta.env.url;
+
   let timeout = ()=>{
          setTimeout(3000,navigate('/home'))
   }
@@ -53,7 +55,7 @@ const Expense = () => {
       setLoading(true); // Set loading to true
       try {
         // Send POST request to backend using Axios
-        const response = await axios.post(`${process.env.url}/add-expense`, {
+        const response = await axios.post(`${baseurl}/add-expense`, {
           ...expense},{headers:{"Authorization":`Bearer ${ClientId}`,'X-Custom-Header': 'CustomValue'}});
 
         // Handle successful response

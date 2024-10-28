@@ -37,6 +37,9 @@ const SignIn = () => {
 
     const navigate = useNavigate();
 
+    const baseurl = import.meta.env.url;
+    console.log(baseurl)
+
     useEffect(() => {
         userRef.current.focus(); 
     }, []);
@@ -62,7 +65,7 @@ const SignIn = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(`${process.env.url}/signin`, { name:user, password:pwd });
+            const response = await axios.post(`${baseurl}/signin`, { name:user, password:pwd });
             console.log(response.data);
             
             if (response.status === 200) {

@@ -39,6 +39,8 @@ const Login = () => {
     const [success, setSuccess] = useState(false);
 
     const navigate = useNavigate();
+    const baseurl = import.meta.env.url;
+
 
     useEffect(() => {
         userRef.current.focus(); 
@@ -65,7 +67,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(`${process.env.url}/signup`, {
+            const response = await axios.post(`${baseurl}/signup`, {
                 name: user,
                 password: pwd ,// Updated field name,
                 email:email

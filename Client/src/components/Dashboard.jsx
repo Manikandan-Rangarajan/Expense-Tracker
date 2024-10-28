@@ -168,12 +168,14 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const clientId = localStorage.getItem('clientId');
+  const baseurl = import.meta.env.url;
+
 
   // Fetch expenses data from backend
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${process.env.url}/expenses`, {
+        const response = await axios.get(`${baseurl}/expenses`, {
           headers: { "Authorization": `Bearer ${clientId}` }
         });
         const expenses = response.data;
@@ -243,7 +245,7 @@ const Dashboard = () => {
       const payload = { id: transactionId }
       // Send a POST request to delete the transaction, including the transaction ID and authorization token
       const response = await axios.post(
-        `${process.env.url}/deleteTransaction`,
+        `${baseurl}/deleteTransaction`,
         payload,
 // Data payload containing the transaction ID
         {

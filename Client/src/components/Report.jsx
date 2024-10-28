@@ -9,12 +9,13 @@ const Report = () => {
   const [selectedPeriod, setSelectedPeriod] = useState({ type: 'monthly', month: '', year: '' });
   const [filteredExpenses, setFilteredExpenses] = useState([]);
   const [expenses, setExpenses] = useState([]); // Expense data for pie chart
-  
+  const baseurl = import.meta.env.url;
+
 
   useEffect(()=>{
     const fetchData = async ()=>{
       try{
-        const response = await axios.get(`http://localhost:3000/report`, {
+        const response = await axios.get(`${baseurl}/report`, {
           headers: { "Authorization": `Bearer ${clientId}` }})
           console.log(response.data)
           setExpenses(response.data);
