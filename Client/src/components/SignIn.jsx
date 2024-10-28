@@ -38,7 +38,6 @@ const SignIn = () => {
     const navigate = useNavigate();
 
     const baseurl = import.meta.env.VITE_URL;
-    console.log(baseurl)
 
     useEffect(() => {
         userRef.current.focus(); 

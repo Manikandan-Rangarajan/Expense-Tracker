@@ -23,6 +23,7 @@ const History = () => {
 
   const clientId = localStorage.getItem('clientId');
   console.log(clientId)
+  const baseurl = import.meta.env.VITE_URL;
 
   // Filter expenses based on search term, category, and date range
   useEffect(() => {
@@ -55,7 +56,7 @@ const History = () => {
       const fetchData = async ()=>{
         try{
  
-          const response = await axios.get(`http://localhost:3000/history`,
+          const response = await axios.get(`${baseurl}/history`,
             {headers:{"Authorization":`Bearer ${clientId}`}});
           
             if(response.status == 200){
