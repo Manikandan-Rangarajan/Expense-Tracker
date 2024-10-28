@@ -118,6 +118,11 @@ app.get("/report", verifyToken, async(req,res)=>{
   }
 })
 
+app.get('/',async(req,res)=>{
+  res.send("Konichiwa");
+  console.log("hello");
+})
+
 app.get('/expenses', verifyToken ,async (req, res) => {
   // const { username } = req.params;
   const { clientId} = req.body;
