@@ -175,7 +175,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${baseurl}/expenses`, {
+        const response = await axios.get(`${import.meta.VITE_URL}/expenses`, {
           headers: { "Authorization": `Bearer ${clientId}` }
         });
         const expenses = response.data;

@@ -39,7 +39,7 @@ const Login = () => {
     const [success, setSuccess] = useState(false);
 
     const navigate = useNavigate();
-    const baseurl = import.meta.env.url;
+    const baseurl = import.meta.env.VITE_URL;
 
 
     useEffect(() => {
