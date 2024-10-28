@@ -15,7 +15,7 @@ const privatekey = 'Jokerpanda';
 
 // app.use(bodyParser.json());
 app.use(cors({
-  origin: true,
+  origin: ['http://your-frontend-domain.com', 'http://manibackend.portfoli.info'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
