@@ -215,9 +215,9 @@ app.post('/add-expense', verifyToken,async (req, res) => {
 });
 
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(path.resolve(), '../Client/dist', 'index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.join(path.resolve(), '../Client/dist', 'index.html'));
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT,'0.0.0.0', () => {
